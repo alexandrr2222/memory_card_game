@@ -30,9 +30,16 @@
   font-style: italic;
   font-display: swap;
 }
+@font-face {
+  font-family: "NotoSansRunic";
+  src: url("./assets/fonts/NotoSansRunic.woff2") format("woff2");
+  font-weight: 400 900;
+  font-style: normal;
+  font-display: swap;
+}
 @theme {
   --font-norse: "Norse", serif;
-  --font-serif: "Alegreya", Georgia, serif;
+  --font-serif: "Alegreya", "NotoSansRunic", Georgia, serif;
   /* TEXT */
   --color-text: #f0c49a;
   --color-title: #e8b45a;
@@ -46,4 +53,18 @@
     linear-gradient(rgba(10, 5, 2, 0.65), rgba(10, 5, 2, 0.65)),
     url("./assets/texture/planks.webp");
   background-attachment: fixed;
+}
+body {
+  cursor:
+    url("/cursors/runeArrow.png") 1 1,
+    auto;
+}
+button,
+[role="button"] {
+  cursor:
+    url("/cursors/runeHand.png") 12 2,
+    pointer;
+}
+img {
+  -webkit-user-drag: none;
 }
