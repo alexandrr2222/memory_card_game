@@ -1,4 +1,4 @@
-import { commonIconStyle } from "./styles";
+import { commonIconStyle } from "../styles";
 export function ToggleButton({
   pressed,
   onToggle,

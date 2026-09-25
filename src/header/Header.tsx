@@ -1,13 +1,13 @@
-import SpeakerOn from "./assets/icons/speaker.svg?react";
-import SpeakerOff from "./assets/icons/speaker-off.svg?react";
-import MusicOn from "./assets/icons/sound-on.svg?react";
-import MusicOff from "./assets/icons/sound-off.svg?react";
-import TooltipsOn from "./assets/icons/scroll-unfurled.svg?react";
-import TooltipsOff from "./assets/icons/tied-scroll.svg?react";
-import Info from "./assets/icons/info.svg?react";
-import type { SettingsType } from "./settings/settings";
+import SpeakerOn from "../assets/icons/speaker.svg?react";
+import SpeakerOff from "../assets/icons/speaker-off.svg?react";
+import MusicOn from "../assets/icons/sound-on.svg?react";
+import MusicOff from "../assets/icons/sound-off.svg?react";
+import TooltipsOn from "../assets/icons/scroll-unfurled.svg?react";
+import TooltipsOff from "../assets/icons/tied-scroll.svg?react";
+import Info from "../assets/icons/info.svg?react";
+import type { SettingsType } from "../settings/settings";
 import { ToggleButton } from "./ToggleButton";
-import { commonIconStyle } from "./styles";
+import { commonIconStyle } from "../styles";
 
 export function Header({
   toggleSetting,
@@ -21,7 +21,7 @@ export function Header({
       <div className="col-start-1 justify-self-start flex flex-col">
         <h1 className="text-8xl text-tile font-norse text-shadow-lg">Muninn</h1>
         <p className="text-muted text-2xl pl-10 text-shadow-black/80">
-          Younger Futhark Memory Game
+          Runic Memory Game
         </p>
       </div>
       <div className="col-start-2 justify-self-end">
