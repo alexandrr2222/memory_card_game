@@ -1,17 +1,24 @@
 export function EndDialog({
   dialogRef,
-  text,
+  statusText,
   onClick,
   onClose,
+  lastCard,
 }: {
   dialogRef: React.RefObject<HTMLDialogElement | null>;
-  text: string;
+  statusText: string;
   onClick: () => void;
   onClose: () => void;
+  lastCard?: string | null;
 }) {
   return (
     <dialog ref={dialogRef} onClose={onClose}>
-      <p>{text}</p>
+      <h2>{statusText}</h2>
+      {statusText === "won" ? null : (
+        <p className="whitespace-pre-line">
+          {`You already picked ${lastCard}. \n Each rune can only be picked once.`}
+        </p>
+      )}
       <button className="select-none" type="button" onClick={onClick}>
         Play again
       </button>

@@ -6,6 +6,7 @@ import type { CardType } from "../types";
 import { EndDialog } from "./EndDialog";
 import type { SettingsType } from "../settings/settings";
 import { sounds } from "../sounds";
+import { AnimatePresence, motion } from "motion/react";
 
 export function CardGame({ settings }: { settings: SettingsType }) {
   const [deck, setDeck] = useState(() => shuffle(cards));
@@ -14,6 +15,7 @@ export function CardGame({ settings }: { settings: SettingsType }) {
   const [gameStatus, setGameStatus] = useState<null | "won" | "lost">(null);
   const [round, setRound] = useState(0);
   const [gameLock, setGameLock] = useState(false);
+  const [lastCard, setLastCard] = useState<string | null>(null);
   const rate = 1 + (clickedCards.length / cards.length) * (1.23 - 1);
   function handleCardClick(cardObject: CardType) {
     if (gameLock) return;
@@ -21,6 +23,7 @@ export function CardGame({ settings }: { settings: SettingsType }) {
     setTimeout(() => {
       setGameLock(false);
     }, 2000);
+    setLastCard(cardObject.name);
     if (clickedCards.some((cc) => cc.id === cardObject.id)) {
       if (settings.soundOn) sounds.loseSound.play();
       setGameStatus("lost");
@@ -65,7 +68,8 @@ export function CardGame({ settings }: { settings: SettingsType }) {
           setClickedCards([]);
           setDeck(shuffle(cards));
         }}
-        text={gameStatus === "won" ? "You won" : "You lost"}
+        statusText={gameStatus === "won" ? "You won" : `You lost`}
+        lastCard={lastCard}
       />
       <div className="flex flex-wrap gap-3 justify-center">
         {deck.map((c) => {
@@ -75,12 +79,27 @@ export function CardGame({ settings }: { settings: SettingsType }) {
               key={c.id}
               onClick={handleCardClick}
               round={round}
+              gameLock={gameLock}
             />
           );
         })}
       </div>
-      <p className=" flex justify-center text-6xl mt-12">
-        {clickedCards.length}/{cards.length}
+      <p className="tabular-nums flex justify-center text-6xl pt-12 ">
+        <span className=" py-5 -my-5 relative inline-block mask-[linear-gradient(to_bottom,transparent,black_30%,black_70%,transparent)]">
+          <AnimatePresence mode="popLayout" initial={false}>
+            <motion.span
+              key={clickedCards.length}
+              className="inline-block"
+              initial={{ y: "100%", opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: "-100%", opacity: 0 }}
+              transition={{ duration: 0.25 }}
+            >
+              {clickedCards.length}
+            </motion.span>
+          </AnimatePresence>
+        </span>
+        /{cards.length}
       </p>
     </main>
   );

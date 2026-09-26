@@ -1,5 +1,6 @@
 import type { CardType, WikiDataType } from "../types";
 import { motion } from "motion/react";
+import Tilt from "react-parallax-tilt";
 import scrollUnfurled from "../assets/icons/scroll-unfurled.svg";
 import backCard from "../assets/cards/00-back.svg";
 
@@ -8,44 +9,60 @@ export function Card({
   wikiData,
   onClick,
   round,
+  gameLock,
 }: {
   cardObject: CardType;
   wikiData?: WikiDataType;
   onClick: (card: CardType) => void;
   round: number;
+  gameLock: boolean;
 }) {
   const end = round * 360;
   const start = end - 360;
   return (
     <motion.div layout transition={{ layout: { duration: 0.6, delay: 0.6 } }}>
-      <div className="w-fit perspective-distant">
-        <motion.button
-          className="w-49 h-74 transform-3d select-none focus-visible:outline-5 rounded-3xl focus-visible:-outline-offset-5 focus-visible:outline-text"
-          type="button"
-          animate={{
-            rotateY:
-              round === 0
-                ? 0
-                : [start, start + 180, start + 180, start + 180, end],
-          }}
-          transition={{ duration: 2 }}
-          onClick={() => onClick(cardObject)}
-        >
-          <img
-            className="absolute inset-0 backface-hidden"
-            src={cardObject.icon}
-            alt={cardObject.name}
-            draggable={false}
-          />
-          <img
-            className="absolute inset-0 backface-hidden rotate-y-180"
-            // cursor-[url(/cursors/runeArrow.png)_1_1,auto]
-            src={backCard}
-            alt=""
-            draggable={false}
-          />
-        </motion.button>
-      </div>
+      <Tilt
+        className={`[clip-path:inset(6px_6px_16px_6px_round_16px)] ${gameLock ? "[&_.glare-wrapper]:invisible" : ""}`}
+        tiltAngleXManual={gameLock ? 0 : null}
+        tiltAngleYManual={gameLock ? 0 : null}
+        tiltMaxAngleX={16}
+        tiltMaxAngleY={16}
+        transitionSpeed={600}
+        glareEnable
+        glareColor="#c98a4b"
+        glareMaxOpacity={0.15}
+        glarePosition="all"
+        glareBorderRadius="24px"
+      >
+        <div className="w-fit perspective-distant">
+          <motion.button
+            className="w-49 h-74 transform-3d select-none focus-visible:outline-5 rounded-3xl focus-visible:-outline-offset-5 focus-visible:outline-text"
+            type="button"
+            animate={{
+              rotateY:
+                round === 0
+                  ? 0
+                  : [start, start + 180, start + 180, start + 180, end],
+            }}
+            transition={{ duration: 2 }}
+            onClick={() => onClick(cardObject)}
+          >
+            <img
+              className="absolute inset-0 backface-hidden"
+              src={cardObject.icon}
+              alt={cardObject.name}
+              draggable={false}
+            />
+            <img
+              className="absolute inset-0 backface-hidden rotate-y-180"
+              // cursor-[url(/cursors/runeArrow.png)_1_1,auto]
+              src={backCard}
+              alt=""
+              draggable={false}
+            />
+          </motion.button>
+        </div>
+      </Tilt>
 
       <motion.div
         key={round}
