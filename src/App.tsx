@@ -11,7 +11,7 @@ function App() {
     else musicPlayer.pause();
   }, [settings.musicOn]);
   return (
-    <div className="p-5 select-none">
+    <div className="p-5 select-none w-full max-w-[1700px] mx-auto">
       <Header toggleSetting={toggleSetting} settings={settings} />
       <CardGame settings={settings} />
     </div>
@@ -20,10 +20,11 @@ function App() {
 
 export default App;
 // TODO
-// async wikibox for cards
-// modal style
+// async wikibox for cards + style for button
 // responsivness
 
-// refinements
+// REFINEMENTS
+// fix runes
+// redo win/lose audio
 // audio api
 // make music play on game start

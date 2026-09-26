@@ -6,6 +6,7 @@ import TooltipsOn from "../assets/icons/scroll-unfurled.svg?react";
 import TooltipsOff from "../assets/icons/tied-scroll.svg?react";
 import type { SettingsType } from "../settings/settings";
 import { ToggleButton } from "./ToggleButton";
+import { shadow } from "../styles";
 export function Header({
   toggleSetting,
   settings,
@@ -14,14 +15,10 @@ export function Header({
   settings: SettingsType;
 }) {
   return (
-    <header className="grid grid-cols-2">
-      <div className="col-start-1 justify-self-start flex flex-col">
-        <h1 className="text-8xl text-tile font-norse text-shadow-lg">Muninn</h1>
-        <p className="text-muted text-2xl pl-10 text-shadow-black/80">
-          Runic Memory Card Game
-        </p>
-      </div>
-      <div className="col-start-2 justify-self-end">
+    <header
+      className={`grid grid-cols-[1fr_auto_1fr] items-center px-8 ${shadow}`}
+    >
+      <div className="justify-self-start self-start pt-2">
         <ToggleButton
           pressed={settings.tooltipsOn}
           onToggle={() => toggleSetting("tooltipsOn")}
@@ -30,6 +27,18 @@ export function Header({
           OffIcon={TooltipsOff}
           settings={settings}
         />
+      </div>
+
+      <div className="flex flex-col items-center">
+        <h1 className="text-8xl font-norse [text-shadow:0_2px_4px_rgba(0,0,0,0.6)]">
+          Muninn
+        </h1>
+        <p className="text-2xl opacity-80 [text-shadow:0_2px_4px_rgba(0,0,0,0.6)]">
+          A Younger Futhark memory game
+        </p>
+      </div>
+
+      <div className="justify-self-end self-start pt-2">
         <ToggleButton
           pressed={settings.soundOn}
           onToggle={() => toggleSetting("soundOn")}

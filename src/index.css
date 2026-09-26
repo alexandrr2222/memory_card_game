@@ -41,17 +41,30 @@
   --font-norse: "Norse", serif;
   --font-serif: "Alegreya", "NotoSansRunic", Georgia, serif;
   /* TEXT */
-  --color-text: #f0c49a;
+  --color-text: #bc7a4b;
   --color-title: #e8b45a;
   --color-muted: #c79a73;
-  --color-accent: #e0703a;
+  --color-accent: #a7672e;
+}
+@utility bg-board {
+  background-image:
+    linear-gradient(rgb(28 16 10 / 0.8), rgb(28 16 10 / 0.8)),
+    linear-gradient(#ffdabb, #ffdabb), url("./assets/texture/planks.webp");
+  background-blend-mode: normal, multiply, normal;
+  background-size: auto, auto, 256px;
 }
 :root {
   font-family: var(--font-serif);
   color: var(--color-text);
   background-image:
-    linear-gradient(rgba(10, 5, 2, 0.65), rgba(10, 5, 2, 0.65)),
-    url("./assets/texture/planks.webp");
+    radial-gradient(
+      ellipse at center,
+      transparent 40%,
+      rgba(0, 0, 0, 0.8) 100%
+    ),
+    linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)),
+    linear-gradient(#ffdabb, #ffdabb), url("./assets/texture/planks.webp");
+  background-blend-mode: normal, normal, multiply, normal;
   background-attachment: fixed;
 }
 body {

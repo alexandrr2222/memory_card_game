@@ -7,6 +7,7 @@ import { EndDialog } from "./EndDialog";
 import type { SettingsType } from "../settings/settings";
 import { sounds } from "../sounds";
 import { AnimatePresence, motion } from "motion/react";
+import { shadow } from "../styles";
 
 export function CardGame({ settings }: { settings: SettingsType }) {
   const [deck, setDeck] = useState(() => shuffle(cards));
@@ -15,7 +16,7 @@ export function CardGame({ settings }: { settings: SettingsType }) {
   const [gameStatus, setGameStatus] = useState<null | "won" | "lost">(null);
   const [round, setRound] = useState(0);
   const [gameLock, setGameLock] = useState(false);
-  const [lastCard, setLastCard] = useState<string | null>(null);
+  const [lastCard, setLastCard] = useState<CardType | null>(null);
   const rate = 1 + (clickedCards.length / cards.length) * (1.23 - 1);
   function handleCardClick(cardObject: CardType) {
     if (gameLock) return;
@@ -23,7 +24,7 @@ export function CardGame({ settings }: { settings: SettingsType }) {
     setTimeout(() => {
       setGameLock(false);
     }, 2000);
-    setLastCard(cardObject.name);
+    setLastCard(cardObject);
     if (clickedCards.some((cc) => cc.id === cardObject.id)) {
       if (settings.soundOn) sounds.loseSound.play();
       setGameStatus("lost");
@@ -50,7 +51,7 @@ export function CardGame({ settings }: { settings: SettingsType }) {
   }
 
   return (
-    <main className="p-15">
+    <main className="pt-15">
       <EndDialog
         dialogRef={dialogRef}
         onClick={() => {
@@ -84,8 +85,10 @@ export function CardGame({ settings }: { settings: SettingsType }) {
           );
         })}
       </div>
-      <p className="tabular-nums flex justify-center text-6xl pt-12 ">
-        <span className=" py-5 -my-5 relative inline-block mask-[linear-gradient(to_bottom,transparent,black_30%,black_70%,transparent)]">
+      <p
+        className={`flex justify-center items-baseline pt-12 text-6xl lining-nums tabular-nums ${shadow}`}
+      >
+        <span className="relative inline-block py-5 -my-5 mask-[linear-gradient(to_bottom,transparent,black_30%,black_70%,transparent)]">
           <AnimatePresence mode="popLayout" initial={false}>
             <motion.span
               key={clickedCards.length}
@@ -99,10 +102,10 @@ export function CardGame({ settings }: { settings: SettingsType }) {
             </motion.span>
           </AnimatePresence>
         </span>
-        /{cards.length}
+        <span className="ml-1 text-[0.5em] opacity-60">/{cards.length}</span>
       </p>
     </main>
   );
 }
-// shit from async stored in state and that state passed
+// stuff from async stored in state and that state passed
 // to Card and when the async loads > state updates and thus it loads in
