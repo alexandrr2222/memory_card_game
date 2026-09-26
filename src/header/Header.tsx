@@ -4,11 +4,8 @@ import MusicOn from "../assets/icons/sound-on.svg?react";
 import MusicOff from "../assets/icons/sound-off.svg?react";
 import TooltipsOn from "../assets/icons/scroll-unfurled.svg?react";
 import TooltipsOff from "../assets/icons/tied-scroll.svg?react";
-import Info from "../assets/icons/info.svg?react";
 import type { SettingsType } from "../settings/settings";
 import { ToggleButton } from "./ToggleButton";
-import { commonIconStyle } from "../styles";
-
 export function Header({
   toggleSetting,
   settings,
@@ -49,9 +46,6 @@ export function Header({
           OffIcon={MusicOff}
           settings={settings}
         />
-        <button type="button" aria-label="How to play">
-          <Info className={`${commonIconStyle}`} aria-hidden="true" />
-        </button>
       </div>
     </header>
   );
