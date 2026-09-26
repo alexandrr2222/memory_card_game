@@ -21,7 +21,7 @@ export function Header({
       <div className="col-start-1 justify-self-start flex flex-col">
         <h1 className="text-8xl text-tile font-norse text-shadow-lg">Muninn</h1>
         <p className="text-muted text-2xl pl-10 text-shadow-black/80">
-          Runic Memory Game
+          Runic Memory Card Game
         </p>
       </div>
       <div className="col-start-2 justify-self-end">
@@ -31,6 +31,7 @@ export function Header({
           label="Tooltips"
           OnIcon={TooltipsOn}
           OffIcon={TooltipsOff}
+          settings={settings}
         />
         <ToggleButton
           pressed={settings.soundOn}
@@ -38,6 +39,7 @@ export function Header({
           label="Sound"
           OnIcon={SpeakerOn}
           OffIcon={SpeakerOff}
+          settings={settings}
         />
         <ToggleButton
           pressed={settings.musicOn}
@@ -45,6 +47,7 @@ export function Header({
           label="Music"
           OnIcon={MusicOn}
           OffIcon={MusicOff}
+          settings={settings}
         />
         <button type="button" aria-label="How to play">
           <Info className={`${commonIconStyle}`} aria-hidden="true" />

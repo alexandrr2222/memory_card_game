@@ -7,9 +7,18 @@ function App() {
   return (
     <div className="p-5 select-none">
       <Header toggleSetting={toggleSetting} settings={settings} />
-      <CardGame />
+      <CardGame settings={settings} />
     </div>
   );
 }
 
 export default App;
+// TODO
+// change ogg to mp3
+// hover on card style
+// async wikibox for cards
+// modal style
+// sound clicks
+// music
+// how to play button
+// responsivness

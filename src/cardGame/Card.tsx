@@ -39,6 +39,7 @@ export function Card({
           />
           <img
             className="absolute inset-0 backface-hidden rotate-y-180"
+            // cursor-[url(/cursors/runeArrow.png)_1_1,auto]
             src={backCard}
             alt=""
             draggable={false}
