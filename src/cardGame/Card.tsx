@@ -14,6 +14,7 @@ export function Card({
   settings,
   setLastInfo,
   popUpRef,
+  index,
 }: {
   cardObject: CardType;
   wikiData?: WikiDataType;
@@ -23,14 +24,23 @@ export function Card({
   settings: SettingsType;
   setLastInfo: React.Dispatch<React.SetStateAction<CardType | null>>;
   popUpRef: React.RefObject<HTMLDialogElement | null>;
+  index: number;
 }) {
   const end = round * 360;
   const start = end - 360;
+  const dealDelay = 0.05 + index * 0.08;
+
   return (
     <motion.div
       className="@container min-w-0"
       layout
-      transition={{ layout: { duration: 0.6, delay: 0.6 } }}
+      initial={{ opacity: 0, y: 16, rotate: 0 }}
+      animate={{ opacity: 1, y: 0, rotate: 0 }}
+      transition={{
+        layout: { duration: 0.6, delay: 0.6 },
+        opacity: { duration: 0, delay: dealDelay },
+        default: { duration: 0.4, delay: dealDelay, ease: "easeOut" },
+      }}
     >
       <div className="-mb-1 filter-[drop-shadow(0_10px_10px_rgba(0,0,0,0.75))] pointer-fine:filter-[drop-shadow(0_3px_3px_rgba(0,0,0,0.85))_drop-shadow(0_22px_24px_rgba(0,0,0,0.6))]">
         <Tilt
@@ -96,9 +106,11 @@ export function Card({
             className="transition-colors duration-200 underline decoration-dotted decoration-[1.5px] underline-offset-[0.25em] decoration-text/50 hover:decoration-text text-[max(0.7rem,9cqw)] leading-tight opacity-90 [text-shadow:0_2px_4px_rgba(0,0,0,0.7)]"
             type="button"
             onClick={() => {
+              console.log(settings);
               if (settings.soundOn) playSound(sounds.toggleOnSound);
               setLastInfo(cardObject);
               popUpRef.current?.showModal();
+              popUpRef.current?.focus();
             }}
           >
             {cardObject.name}

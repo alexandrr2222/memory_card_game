@@ -11,7 +11,15 @@ import { shadow } from "../styles";
 import { fetchWiki } from "./wikiFetch";
 import type { WikiDataType } from "../types";
 import { CardPopUp } from "./CardPopUp";
+import { Tutorial } from "../Tutorial";
 export function CardGame({ settings }: { settings: SettingsType }) {
+  const tutorialRef = useRef<HTMLDialogElement>(null);
+  useEffect(() => {
+    if (localStorage.getItem("seenTutorial")) return;
+    localStorage.setItem("seenTutorial", "true");
+    tutorialRef.current?.showModal();
+    tutorialRef.current?.focus();
+  }, []);
   const popUpRef = useRef<HTMLDialogElement>(null);
   const [wikiData, setWikiData] = useState<Array<WikiDataType>>([]);
   useEffect(() => {
@@ -37,11 +45,13 @@ export function CardGame({ settings }: { settings: SettingsType }) {
       if (settings.soundOn) playSound(sounds.loseSound);
       setGameStatus("lost");
       dialogRef.current?.showModal();
+      dialogRef.current?.focus();
     } else if (clickedCards.length === cards.length - 1) {
       if (settings.soundOn) playSound(sounds.winSound);
       setClickedCards([...clickedCards, cardObject]);
       setGameStatus("won");
       dialogRef.current?.showModal();
+      dialogRef.current?.focus();
     } else {
       if (settings.soundOn) {
         const randomKnock =
@@ -62,6 +72,15 @@ export function CardGame({ settings }: { settings: SettingsType }) {
     lastWikiData = wikiData.find((data) => data.id === lastInfo.id);
   return (
     <main className="flex-1 flex flex-col justify-center pt-6 sm:pt-10 lg:pt-15">
+      <Tutorial
+        tutorialRef={tutorialRef}
+        onClick={() => {
+          if (tutorialRef.current) tutorialRef.current.close();
+        }}
+        soundCheck={() => {
+          if (settings.soundOn) playSound(sounds.toggleOnSound);
+        }}
+      />
       <CardPopUp
         popUpRef={popUpRef}
         title={lastWikiData?.title + " / " + lastInfo?.name}
@@ -97,9 +116,10 @@ export function CardGame({ settings }: { settings: SettingsType }) {
         className="board mx-auto grid w-full grid-cols-[repeat(var(--cols),minmax(0,1fr))] gap-x-(--gap-x) gap-y-(--gap-y)"
         style={{ "--count": cards.length } as React.CSSProperties}
       >
-        {deck.map((c) => {
+        {deck.map((c, i) => {
           return (
             <Card
+              index={i}
               cardObject={c}
               key={c.id}
               onClick={handleCardClick}
@@ -135,5 +155,3 @@ export function CardGame({ settings }: { settings: SettingsType }) {
     </main>
   );
 }
-// stuff from async stored in state and that state passed
-// to Card and when the async loads > state updates and thus it loads in

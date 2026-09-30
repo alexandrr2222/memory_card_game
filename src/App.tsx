@@ -31,7 +31,7 @@ function App() {
     };
   }, [settings.musicOn]);
   return (
-    <div className="px-3 py-4 sm:p-5 select-none w-full max-w-[1700px] mx-auto min-h-svh flex flex-col">
+    <div className="px-3 py-4 sm:p-5 select-none w-full max-w-[1700px] mx-auto min-h-dvh flex flex-col">
       <Header toggleSetting={toggleSetting} settings={settings} />
       <CardGame settings={settings} />
     </div>

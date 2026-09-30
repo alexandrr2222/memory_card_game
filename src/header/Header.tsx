@@ -34,7 +34,7 @@ export function Header({
           Muninn
         </h1>
         <p className="text-sm sm:text-xl lg:text-2xl opacity-80 text-center [text-shadow:0_2px_4px_rgba(0,0,0,0.6)]">
-          A Younger Futhark memory game
+          Norse Runes Memory Game
         </p>
       </div>
 
