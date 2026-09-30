@@ -5,7 +5,7 @@ import { shuffle } from "./shuffleCards";
 import type { CardType } from "../types";
 import { EndDialog } from "./EndDialog";
 import type { SettingsType } from "../settings/settings";
-import { sounds } from "../sounds";
+import { sounds, playSound } from "../sounds";
 import { AnimatePresence, motion } from "motion/react";
 import { shadow } from "../styles";
 import { fetchWiki } from "./wikiFetch";
@@ -34,11 +34,11 @@ export function CardGame({ settings }: { settings: SettingsType }) {
     }, 2000);
     setLastCard(cardObject);
     if (clickedCards.some((cc) => cc.id === cardObject.id)) {
-      if (settings.soundOn) sounds.loseSound.play();
+      if (settings.soundOn) playSound(sounds.loseSound);
       setGameStatus("lost");
       dialogRef.current?.showModal();
     } else if (clickedCards.length === cards.length - 1) {
-      if (settings.soundOn) sounds.winSound.play();
+      if (settings.soundOn) playSound(sounds.winSound);
       setClickedCards([...clickedCards, cardObject]);
       setGameStatus("won");
       dialogRef.current?.showModal();
@@ -50,7 +50,7 @@ export function CardGame({ settings }: { settings: SettingsType }) {
           ];
         randomKnock.playbackRate = rate;
         randomKnock.currentTime = 0;
-        randomKnock.play();
+        playSound(randomKnock);
       }
       setClickedCards([...clickedCards, cardObject]);
       setDeck(shuffle(cards));
@@ -61,18 +61,17 @@ export function CardGame({ settings }: { settings: SettingsType }) {
   if (lastInfo !== null)
     lastWikiData = wikiData.find((data) => data.id === lastInfo.id);
   return (
-    <main className="pt-15">
+    <main className="flex-1 flex flex-col justify-center pt-6 sm:pt-10 lg:pt-15">
       <CardPopUp
         popUpRef={popUpRef}
-        title={lastInfo?.wikiTitle + "/" + lastInfo?.name}
+        title={lastWikiData?.title + " / " + lastInfo?.name}
         text={lastWikiData?.extract}
         url={lastWikiData?.url}
         onClick={() => {
           if (popUpRef.current) popUpRef.current.close();
         }}
         soundCheck={() => {
-          if (settings.soundOn) sounds.toggleOnSound.play();
-          else sounds.toggleOffSound.play();
+          if (settings.soundOn) playSound(sounds.toggleOnSound);
         }}
       ></CardPopUp>
       <EndDialog
@@ -81,8 +80,7 @@ export function CardGame({ settings }: { settings: SettingsType }) {
           if (dialogRef.current) dialogRef.current.close();
         }}
         onClose={() => {
-          if (settings.soundOn) sounds.toggleOnSound.play();
-          else sounds.toggleOffSound.play();
+          if (settings.soundOn) playSound(sounds.toggleOnSound);
 
           setGameLock(true);
           setTimeout(() => {
@@ -95,7 +93,10 @@ export function CardGame({ settings }: { settings: SettingsType }) {
         statusText={gameStatus === "won" ? "You won" : `You lost`}
         lastCard={lastCard}
       />
-      <div className="flex flex-wrap gap-3 justify-center">
+      <div
+        className="board mx-auto grid w-full grid-cols-[repeat(var(--cols),minmax(0,1fr))] gap-x-(--gap-x) gap-y-(--gap-y)"
+        style={{ "--count": cards.length } as React.CSSProperties}
+      >
         {deck.map((c) => {
           return (
             <Card
@@ -113,9 +114,9 @@ export function CardGame({ settings }: { settings: SettingsType }) {
         })}
       </div>
       <p
-        className={`flex justify-center items-baseline pt-12 text-6xl lining-nums tabular-nums ${shadow}`}
+        className={`flex justify-center items-baseline pt-6 text-4xl sm:pt-10 sm:text-6xl lining-nums tabular-nums ${shadow}`}
       >
-        <span className="relative inline-block py-5 -my-5 mask-[linear-gradient(to_bottom,transparent,black_30%,black_70%,transparent)]">
+        <span className="relative overflow-clip inline-block py-5 -my-5 mask-[linear-gradient(to_bottom,transparent,black_30%,black_70%,transparent)]">
           <AnimatePresence mode="popLayout" initial={false}>
             <motion.span
               key={clickedCards.length}

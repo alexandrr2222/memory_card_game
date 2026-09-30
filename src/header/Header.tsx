@@ -16,7 +16,7 @@ export function Header({
 }) {
   return (
     <header
-      className={`grid grid-cols-[1fr_auto_1fr] items-center px-8 ${shadow}`}
+      className={`grid grid-cols-[1fr_auto_1fr] items-center sm:px-8 ${shadow}`}
     >
       <div className="justify-self-start self-start pt-2">
         <ToggleButton
@@ -30,10 +30,10 @@ export function Header({
       </div>
 
       <div className="flex flex-col items-center">
-        <h1 className="text-8xl font-norse [text-shadow:0_2px_4px_rgba(0,0,0,0.6)]">
+        <h1 className="text-5xl sm:text-7xl lg:text-8xl font-norse [text-shadow:0_2px_4px_rgba(0,0,0,0.6)]">
           Muninn
         </h1>
-        <p className="text-2xl opacity-80 [text-shadow:0_2px_4px_rgba(0,0,0,0.6)]">
+        <p className="text-sm sm:text-xl lg:text-2xl opacity-80 text-center [text-shadow:0_2px_4px_rgba(0,0,0,0.6)]">
           A Younger Futhark memory game
         </p>
       </div>

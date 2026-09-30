@@ -22,3 +22,7 @@ export const sounds = {
   toggleOffSound,
   knockSoundArray,
 };
+export function playSound(audio: HTMLAudioElement) {
+  audio.currentTime = 0;
+  audio.play().catch(() => {});
+}

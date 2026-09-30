@@ -11,7 +11,8 @@ function App() {
     else musicPlayer.pause();
   }, [settings.musicOn]);
   return (
-    <div className="p-5 select-none w-full max-w-[1700px] mx-auto">
+    <div className="px-3 py-4 sm:p-5 select-none w-full max-w-[1700px] mx-auto min-h-svh flex flex-col">
+      {" "}
       <Header toggleSetting={toggleSetting} settings={settings} />
       <CardGame settings={settings} />
     </div>
@@ -19,13 +20,8 @@ function App() {
 }
 
 export default App;
-// TODO
-// wiki popup
-// responsivness
 
 // REFINEMENTS
-// fancier hover on wikibutton
-// fadein/out for modal
 // fix runes
 // redo win/lose audio
 // audio api

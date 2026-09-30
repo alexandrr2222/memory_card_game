@@ -19,9 +19,9 @@ export function EndDialog({
     <dialog
       ref={dialogRef}
       onClose={onClose}
-      className="bg-transparent m-auto overflow-visible bg-[radial-gradient(closest-side,rgba(0,0,0,0.55),transparent)] p-20 text-center text-text backdrop:bg-black/60 backdrop:backdrop-blur-[5px]"
+      className="bg-transparent m-auto max-h-svh overflow-y-auto bg-[radial-gradient(closest-side,rgba(0,0,0,0.55),transparent)] px-6 py-8 sm:p-20 text-center text-text opacity-0 transition-all transition-discrete duration-300 motion-reduce:transition-none open:opacity-100 backdrop:bg-black/0 backdrop:backdrop-blur-none backdrop:transition-all backdrop:transition-discrete backdrop:duration-300 open:backdrop:bg-black/60 open:backdrop:backdrop-blur-[5px]"
     >
-      <h2 className="font-norse text-6xl [text-shadow:0_2px_4px_rgba(0,0,0,0.7)]">
+      <h2 className="font-norse text-5xl sm:text-6xl [text-shadow:0_2px_4px_rgba(0,0,0,0.7)]">
         {statusText}
       </h2>
 
@@ -31,9 +31,9 @@ export function EndDialog({
             src={lastCard.icon}
             alt={lastCard.name}
             draggable={false}
-            className="mx-auto mt-8 w-56 select-none filter-[url(#warm)_drop-shadow(0_14px_18px_rgba(0,0,0,0.75))]"
+            className="mx-auto mt-6 w-36 sm:mt-8 sm:w-56 select-none filter-[url(#warm)_drop-shadow(0_14px_18px_rgba(0,0,0,0.75))]"
           />
-          <p className="mt-8 text-xl [text-shadow:0_2px_4px_rgba(0,0,0,0.7)]">
+          <p className="mt-6 text-lg sm:mt-8 sm:text-xl [text-shadow:0_2px_4px_rgba(0,0,0,0.7)]">
             You already picked{" "}
             <span className="text-[#e59a5c] italic">{lastCard.name}</span>
             .

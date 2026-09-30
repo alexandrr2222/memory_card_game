@@ -10,15 +10,23 @@ export async function fetchWiki(
     );
     if (!res.ok) throw new Error(card.name + " fetch failed");
     const data: {
+      title: string;
       extract: string;
       content_urls: { desktop: { page: string } };
     } = await res.json();
-    return { extract: data.extract, url: data.content_urls.desktop.page };
+
+    return {
+      title: data.title,
+      extract: data.extract,
+      url: data.content_urls.desktop.page,
+    };
   });
   const results = await Promise.allSettled(promises);
   const wikiDataArray = results.map((obj, i) => {
-    if (obj.status === "fulfilled") return { id: i + 1, ...obj.value };
-    else return { id: i + 1, extract: "", url: "" };
+    if (obj.status === "fulfilled" && obj.value.title.includes("(rune)"))
+      return { id: i + 1, ...obj.value, title: obj.value.title.slice(0, -6) };
+    else if (obj.status === "fulfilled") return { id: i + 1, ...obj.value };
+    else return { id: i + 1, title: "", extract: "", url: "" };
   });
   setWikiData(wikiDataArray);
 }
