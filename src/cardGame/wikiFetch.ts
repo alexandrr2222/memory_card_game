@@ -24,7 +24,7 @@ export async function fetchWiki(
   const results = await Promise.allSettled(promises);
   const wikiDataArray = results.map((obj, i) => {
     if (obj.status === "fulfilled" && obj.value.title.includes("(rune)"))
-      return { id: i + 1, ...obj.value, title: obj.value.title.slice(0, -6) };
+      return { id: i + 1, ...obj.value, title: obj.value.title.slice(0, -7) };
     else if (obj.status === "fulfilled") return { id: i + 1, ...obj.value };
     else return { id: i + 1, title: "", extract: "", url: "" };
   });

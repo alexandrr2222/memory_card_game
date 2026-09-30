@@ -3,18 +3,9 @@ import { CardGame } from "./cardGame/CardGame";
 import { useSettings } from "./settings/useSettings";
 import { musicPlayer } from "./music";
 import { useEffect } from "react";
-import type { SettingsType } from "./settings/settings";
 
 function App() {
-  const unparsedSettings: string | null = localStorage.getItem("settings");
-  let parsedSettings: SettingsType | null = null;
-  if (unparsedSettings !== null) {
-    parsedSettings = JSON.parse(unparsedSettings);
-  }
-  const { settings, toggleSetting } = useSettings(parsedSettings);
-  useEffect(() => {
-    localStorage.setItem("settings", JSON.stringify(settings));
-  }, [settings]);
+  const { settings, toggleSetting } = useSettings();
   useEffect(() => {
     if (!settings.musicOn) {
       musicPlayer.pause();

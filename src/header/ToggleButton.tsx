@@ -30,17 +30,14 @@ export function ToggleButton({
         onToggle();
       }}
     >
-      {pressed ? (
-        <OnIcon
-          aria-hidden="true"
-          className={`${commonIconStyle} col-start-1 row-start-1 transition-[opacity,scale] duration-200 ${pressed ? "opacity-100 scale-100" : "opacity-0 scale-75"}`}
-        />
-      ) : (
-        <OffIcon
-          aria-hidden="true"
-          className={`${commonIconStyle} col-start-1 row-start-1 transition-[opacity,scale] duration-200 ${pressed ? "opacity-0 scale-75" : "opacity-100 scale-100"}`}
-        />
-      )}
+      <OnIcon
+        aria-hidden="true"
+        className={`${commonIconStyle} col-start-1 row-start-1 transition-[opacity,scale] duration-200 ${pressed ? "opacity-100 scale-100" : "opacity-0 scale-75"}`}
+      />
+      <OffIcon
+        aria-hidden="true"
+        className={`${commonIconStyle} col-start-1 row-start-1 transition-[opacity,scale] duration-200 ${pressed ? "opacity-0 scale-75" : "opacity-100 scale-100"}`}
+      />
     </button>
   );
 }

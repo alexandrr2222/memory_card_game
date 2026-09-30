@@ -106,7 +106,6 @@ export function Card({
             className="transition-colors duration-200 underline decoration-dotted decoration-[1.5px] underline-offset-[0.25em] decoration-text/50 hover:decoration-text text-[max(0.7rem,9cqw)] leading-tight opacity-90 [text-shadow:0_2px_4px_rgba(0,0,0,0.7)]"
             type="button"
             onClick={() => {
-              console.log(settings);
               if (settings.soundOn) playSound(sounds.toggleOnSound);
               setLastInfo(cardObject);
               popUpRef.current?.showModal();
