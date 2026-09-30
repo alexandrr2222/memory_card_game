@@ -1,7 +1,7 @@
 export const defaultSettings: SettingsType = {
   soundOn: true,
   tooltipsOn: true,
-  musicOn: false,
+  musicOn: true,
 };
 
 export type SettingsType = {
