@@ -6,6 +6,6 @@ export type CardType = {
 };
 export type WikiDataType = {
   id: number;
+  extract: string;
   url: string;
-  text: string;
 };

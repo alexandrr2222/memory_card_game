@@ -20,10 +20,12 @@ function App() {
 
 export default App;
 // TODO
-// async wikibox for cards + style for button
+// wiki popup
 // responsivness
 
 // REFINEMENTS
+// fancier hover on wikibutton
+// fadein/out for modal
 // fix runes
 // redo win/lose audio
 // audio api

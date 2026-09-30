@@ -1,8 +1,9 @@
 import type { CardType, WikiDataType } from "../types";
 
-export async function fetchDetails(
+export async function fetchWiki(
   cards: Array<CardType>,
-): Promise<Array<WikiDataType>> {
+  setWikiData: React.Dispatch<React.SetStateAction<WikiDataType[]>>,
+) {
   const promises = cards.map(async (card) => {
     const res = await fetch(
       `https://en.wikipedia.org/api/rest_v1/page/summary/${card.wikiTitle}`,
@@ -15,13 +16,9 @@ export async function fetchDetails(
     return { extract: data.extract, url: data.content_urls.desktop.page };
   });
   const results = await Promise.allSettled(promises);
-  return cards.map((card, i) => {
-    const currentResult = results[i];
-    return {
-      id: card.id,
-      url: currentResult.status === "fulfilled" ? currentResult.value.url : "",
-      text:
-        currentResult.status === "fulfilled" ? currentResult.value.extract : "",
-    };
+  const wikiDataArray = results.map((obj, i) => {
+    if (obj.status === "fulfilled") return { id: i + 1, ...obj.value };
+    else return { id: i + 1, extract: "", url: "" };
   });
+  setWikiData(wikiDataArray);
 }

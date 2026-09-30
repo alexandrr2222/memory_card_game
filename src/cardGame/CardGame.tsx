@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Card } from "./Card";
 import { cards } from "./CardsArray";
 import { shuffle } from "./shuffleCards";
@@ -8,8 +8,15 @@ import type { SettingsType } from "../settings/settings";
 import { sounds } from "../sounds";
 import { AnimatePresence, motion } from "motion/react";
 import { shadow } from "../styles";
-
+import { fetchWiki } from "./wikiFetch";
+import type { WikiDataType } from "../types";
+import { CardPopUp } from "./CardPopUp";
 export function CardGame({ settings }: { settings: SettingsType }) {
+  const popUpRef = useRef<HTMLDialogElement>(null);
+  const [wikiData, setWikiData] = useState<Array<WikiDataType>>([]);
+  useEffect(() => {
+    fetchWiki(cards, setWikiData);
+  }, []);
   const [deck, setDeck] = useState(() => shuffle(cards));
   const [clickedCards, setClickedCards] = useState<Array<CardType>>([]);
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -17,6 +24,7 @@ export function CardGame({ settings }: { settings: SettingsType }) {
   const [round, setRound] = useState(0);
   const [gameLock, setGameLock] = useState(false);
   const [lastCard, setLastCard] = useState<CardType | null>(null);
+  const [lastInfo, setLastInfo] = useState<CardType | null>(null);
   const rate = 1 + (clickedCards.length / cards.length) * (1.23 - 1);
   function handleCardClick(cardObject: CardType) {
     if (gameLock) return;
@@ -49,9 +57,24 @@ export function CardGame({ settings }: { settings: SettingsType }) {
       setRound(round + 1);
     }
   }
-
+  let lastWikiData;
+  if (lastInfo !== null)
+    lastWikiData = wikiData.find((data) => data.id === lastInfo.id);
   return (
     <main className="pt-15">
+      <CardPopUp
+        popUpRef={popUpRef}
+        title={lastInfo?.wikiTitle + "/" + lastInfo?.name}
+        text={lastWikiData?.extract}
+        url={lastWikiData?.url}
+        onClick={() => {
+          if (popUpRef.current) popUpRef.current.close();
+        }}
+        soundCheck={() => {
+          if (settings.soundOn) sounds.toggleOnSound.play();
+          else sounds.toggleOffSound.play();
+        }}
+      ></CardPopUp>
       <EndDialog
         dialogRef={dialogRef}
         onClick={() => {
@@ -81,6 +104,10 @@ export function CardGame({ settings }: { settings: SettingsType }) {
               onClick={handleCardClick}
               round={round}
               gameLock={gameLock}
+              wikiData={wikiData[c.id - 1]}
+              settings={settings}
+              setLastInfo={setLastInfo}
+              popUpRef={popUpRef}
             />
           );
         })}
