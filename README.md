@@ -1,75 +1,29 @@
-# React + TypeScript + Vite
+# Muninn
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A memory card game built around the 16 runes of the Younger Futhark. Every round the cards reshuffle. pick each rune exactly once to win.
 
-Currently, two official plugins are available:
+Named after one of Odin's ravens, whose name means "memory".
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+**Play it:** https://muninn-5cy.pages.dev
 
-## React Compiler
+## About
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Built as the memory card project for The Odin Project's React course. The rune names link to their Wikipedia entries, pulled live from the Wikipedia REST API.
 
-## Expanding the ESLint configuration
+Stack: React, TypeScript, Vite, Tailwind CSS v4, Motion, react-parallax-tilt.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## What I learned
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- **useEffect** for side effects: fetching rune info from Wikipedia when the game loads, and syncing the music player with the settings. Also why effects need cleanup, and why StrictMode runs them twice in dev.
+- **Fetching in parallel** with `Promise.allSettled`, so one failed request doesn't break the other fifteen.
+- **useRef** to control native `<dialog>` elements (`showModal()`, `close()`, focus) without extra state.
+- **A custom hook** (`useSettings`) to keep the sound, music and tooltip toggles in one place.
+- **Keys and layout animations**: stable keys let Motion animate cards to their new positions on every shuffle instead of re-mounting them.
+- **Browser audio quirks**: autoplay is blocked until the user interacts, and `play()` returns a promise that can reject.
+- **Responsive layout without breakpoint soup**: CSS variables and `calc()` size the board to fit the screen, and container queries scale each label with its card.
+- **Mobile performance**: heavy CSS filters like stacked drop shadows get recalculated every frame during animations and choke phones.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Running locally
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
-
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
+    bun install
+    bun run dev
